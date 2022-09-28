@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 import type { Treatment } from '../../../../../shared/types';
 import { axiosInstance } from '../../../axiosInstance';
@@ -18,7 +18,17 @@ export function useTreatments(): Treatment[] {
         error instanceof Error ? error.message : 'error connecting to server';
       toast({ title, status: 'error' });
     },
+    staleTime: 600000, // 10 min
+    cacheTime: 900000, // 15 min (doesn't make sense for staleRime to exceed cacheTime)
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   return data;
+}
+
+export function usePrefetchTreatments(): void {
+  const queryClient = useQueryClient();
+  queryClient.prefetchQuery(queryKeys.treatments, getTreatments);
 }
