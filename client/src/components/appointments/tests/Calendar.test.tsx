@@ -8,6 +8,7 @@ import {
   generateQueryClient,
   renderWithQueryClient,
 } from '../../../test-utils';
+import { MemoryRouter } from 'react-router-dom';
 import { setLogger, QueryClientProvider, QueryClient } from 'react-query';
 
 // mocking useUser to mimic a logged-in user
@@ -28,7 +29,12 @@ test('Appointment query error', async () => {
   );
 
   // ** this part doesn't work WHY ??? ***
-  // renderWithQueryClient(<Calendar />);
+
+  // renderWithQueryClient(
+  //   <MemoryRouter>
+  //     <Calendar />
+  //   </MemoryRouter>,
+  // );
   //
   // // check for the toast alert
   // const alertToast = await screen.findByRole('alert');
